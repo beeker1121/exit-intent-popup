@@ -41,6 +41,7 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
         #bio_ep_bg {} // background
         #bio_ep {} // popup
         #bio_ep_close {} // close button
+	</style>
 </head>
 <body>
     <div id="bio_ep">
