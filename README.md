@@ -88,4 +88,4 @@ bioEp.init({
 
 MIT license, feel free to use however you wish!
 
-Created by [beeker.io](http://beeker.io)
+Created by [beeker.io](http://beeker.io/exit-intent-popup-script-tutorial)
