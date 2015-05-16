@@ -228,6 +228,7 @@ window.bioEp = {
 		this.cookieExp = (typeof opts.cookieExp === 'undefined') ? this.cookieExp : opts.cookieExp;
 	},
 
+	// Ensure the DOM has loaded
 	domReady: function(callback) {
 		(document.readyState === "interactive" || document.readyState === "complete") ? callback() : document.addEventListener("DOMContentLoaded", callback);
 	},
