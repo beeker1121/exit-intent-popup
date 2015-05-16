@@ -85,6 +85,21 @@ bioEp.init({
 });
 ```
 
+# Options
+
+All options must be added to the init function as an object.
+
+Name | Type | Default | Description
+-----|------|---------|------------
+**width** | integer | 400 | The width of the popup. This can be overridden by adding your own CSS for the #bio_ep element.
+**height** | integer | 220 | The height of the popup. This can be overridden by adding your own CSS for the #bio_ep element.
+**html** | string | blank | The HTML code to be placed within the popup. HTML can be added through this function or on the page itself within a element.
+**css** | string | blank | The CSS styles for the popup. CSS can be added through this function or on the page itself.
+**fonts** | array | null | An array containing URLs that link to font stylesheets. Google Fonts was the main idea behind this feature.
+**delay** | integer| 5 | The time, in seconds, until the popup activates and begins watching for exit intent. If showOnDelay is set to true, this will be the time until the popup shows.
+**showOnDelay** | boolean | false | If true, the popup will show after the delay option time. If false, popup will show when a visitor moves their cursor above the document window, showing exit intent.
+**cookieExp** | integer | 30 | The number of days to set the cookie for. A cookie is used to track if the popup has already been shown to a specific visitor. If the popup has been shown, it will not show again until the cookie expires. A value of 0 will always show the popup.
+
 # License
 
 MIT license, feel free to use however you wish!

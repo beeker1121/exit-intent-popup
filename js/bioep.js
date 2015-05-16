@@ -227,11 +227,15 @@ window.bioEp = {
 		this.showOnDelay = (typeof opts.showOnDelay === 'undefined') ? this.showOnDelay : opts.showOnDelay;
 		this.cookieExp = (typeof opts.cookieExp === 'undefined') ? this.cookieExp : opts.cookieExp;
 	},
+
+	domReady: function(callback) {
+		(document.readyState === "interactive" || document.readyState === "complete") ? callback() : document.addEventListener("DOMContentLoaded", callback);
+	},
 	
 	// Initialize
 	init: function(opts) {
 		// Once the DOM has fully loaded
-		window.addEventListener("DOMContentLoaded", function() {
+		this.domReady(function() {
 			// Handle options
 			if(typeof opts !== 'undefined')
 				bioEp.setOptions(opts);
