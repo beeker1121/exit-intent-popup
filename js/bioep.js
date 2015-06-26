@@ -193,25 +193,36 @@ window.bioEp = {
 		// Apply the scale transformation
 		this.popupEl.style.transform = this.transformDefault + " scale(" + scaleTo + ")";
 	},
+
+	// Event listener initialisation for all browsers
+	addEvent: function (obj, event, callback) {
+		if (obj.addEventListener) {
+			obj.addEventListener(event, callback, false);
+		}
+		else if (obj.attachEvent) {
+			obj.attachEvent("on" + event, callback);
+		}
+	},
 	
 	// Load event listeners for the popup
 	loadEvents: function() {
-		// Track mouse movements
-		document.addEventListener("mousemove", function(e) {
-			// Get current scroll position
-			var scroll = window.pageYOffset || document.documentElement.scrollTop;
-			
-			if((e.pageY - scroll) < 7)
+		// Track mouseout event on document
+		this.addEvent(document, "mouseout", function(e) {
+			e = e ? e : window.event;
+			var from = e.relatedTarget || e.toElement;
+			// Reliable, works on mouse exiting window and user switching active program
+			if (!from || from.nodeName == "HTML") {
 				bioEp.showPopup();
+			}
 		});
-		
+
 		// Handle the popup close button
-		this.closeBtnEl.addEventListener("click", function() {
+		this.addEvent(this.closeBtnEl, "click", function() {
 			bioEp.hidePopup();
 		});
 		
 		// Handle window resizing
-		window.addEventListener("resize", function() {
+		this.addEvent(window, "resize", function() {
 			bioEp.scalePopup();
 		});
 	},
