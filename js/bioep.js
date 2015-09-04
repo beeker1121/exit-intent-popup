@@ -98,7 +98,8 @@ window.bioEp = {
 		style.appendChild(css);
 		
 		// Append new CSS to HTML HEAD
-		document.head.addChild(style);
+		document.head.appendChild(style);
+		// elements so user CSS isn't overwritten
 	},
 	
 	// Add the popup to the page
