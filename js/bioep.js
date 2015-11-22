@@ -239,7 +239,7 @@ window.bioEp = {
 
 	// Ensure the DOM has loaded
 	domReady: function(callback) {
-		(document.readyState === "interactive" || document.readyState === "complete") ? callback() : document.addEventListener("DOMContentLoaded", callback);
+		(document.readyState === "interactive" || document.readyState === "complete") ? callback() : this.addEvent(document, "DOMContentLoaded", callback);
 	},
 	
 	// Initialize
@@ -249,12 +249,12 @@ window.bioEp = {
 			// Handle options
 			if(typeof opts !== 'undefined')
 				bioEp.setOptions(opts);
+
+			// Add CSS here to make sure user HTML is hidden regardless of cookie
+			bioEp.addCSS();
 				
 			// Handle the cookie
 			if(bioEp.checkCookie()) return;
-			
-			// Add the CSS
-			bioEp.addCSS();
 			
 			// Add the popup
 			bioEp.addPopup();
