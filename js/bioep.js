@@ -245,7 +245,7 @@ window.bioEp = {
 	// Initialize
 	init: function(opts) {
 		// Add CSS here to make sure user HTML is hidden regardless of cookie
-		bioEp.addCSS();
+		this.addCSS();
 		
 		// Once the DOM has fully loaded
 		this.domReady(function() {
