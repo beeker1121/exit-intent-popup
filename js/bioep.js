@@ -244,15 +244,15 @@ window.bioEp = {
 	
 	// Initialize
 	init: function(opts) {
+		// Handle options
+		if(typeof opts !== 'undefined')
+			bioEp.setOptions(opts);
+		
 		// Add CSS here to make sure user HTML is hidden regardless of cookie
 		this.addCSS();
 		
 		// Once the DOM has fully loaded
-		this.domReady(function() {
-			// Handle options
-			if(typeof opts !== 'undefined')
-				bioEp.setOptions(opts);
-				
+		this.domReady(function() {	
 			// Handle the cookie
 			if(bioEp.checkCookie()) return;
 			
