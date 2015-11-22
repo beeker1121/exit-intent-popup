@@ -196,12 +196,10 @@ window.bioEp = {
 
 	// Event listener initialisation for all browsers
 	addEvent: function (obj, event, callback) {
-		if (obj.addEventListener) {
+		if(obj.addEventListener)
 			obj.addEventListener(event, callback, false);
-		}
-		else if (obj.attachEvent) {
+		else if(obj.attachEvent)
 			obj.attachEvent("on" + event, callback);
-		}
 	},
 	
 	// Load event listeners for the popup
@@ -210,10 +208,10 @@ window.bioEp = {
 		this.addEvent(document, "mouseout", function(e) {
 			e = e ? e : window.event;
 			var from = e.relatedTarget || e.toElement;
+
 			// Reliable, works on mouse exiting window and user switching active program
-			if (!from || from.nodeName == "HTML") {
+			if(!from || from.nodeName === "HTML")
 				bioEp.showPopup();
-			}
 		});
 
 		// Handle the popup close button
