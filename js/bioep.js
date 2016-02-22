@@ -210,7 +210,7 @@ window.bioEp = {
 			var from = e.relatedTarget || e.toElement;
 
 			// Reliable, works on mouse exiting window and user switching active program
-			if(!from || from.nodeName === "HTML")
+			if(!from)
 				bioEp.showPopup();
 		});
 
