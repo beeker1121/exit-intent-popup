@@ -66,9 +66,6 @@ window.bioEp = {
 		// If cookie is set to true
 		if(this.cookieManager.get("bioep_shown") == "true")
 			return true;
-			
-		// Otherwise, create the cookie and return false
-		this.cookieManager.create("bioep_shown", "true", this.cookieExp);
 		
 		return false;
 	},
@@ -141,6 +138,8 @@ window.bioEp = {
 		document.body.style.overflow = "hidden";
 		
 		this.shown = true;
+		
+		this.cookieManager.create("bioep_shown", "true", this.cookieExp);
 	},
 	
 	// Hide the popup
