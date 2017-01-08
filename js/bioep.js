@@ -6,6 +6,10 @@ window.bioEp = {
 	shown: false,
 	overflowDefault: "visible",
 	transformDefault: "",
+	mouse: {
+		curY: 0,
+		lastY: 0
+	},
 	
 	// Popup options
 	width: 400,
@@ -16,16 +20,19 @@ window.bioEp = {
 	delay: 5,
 	showOnDelay: false,
 	cookieExp: 30,
+	showOncePerSession: false,
 	onPopup: null,
 	
 	// Object for handling cookies, taken from QuirksMode
 	// http://www.quirksmode.org/js/cookies.html
 	cookieManager: {
 		// Create a cookie
-		create: function(name, value, days) {
+		create: function(name, value, days, sessionOnly) {
 			var expires = "";
 			
-			if(days) {
+			if(sessionOnly)
+				expires = "; expires=0"
+			else if(days) {
 				var date = new Date();
 				date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 				expires = "; expires=" + date.toGMTString();
@@ -60,6 +67,10 @@ window.bioEp = {
 	checkCookie: function() {
 		// Handle cookie reset
 		if(this.cookieExp <= 0) {
+			// Handle showing pop up once per browser session.
+			if(this.showOncePerSession && this.cookieManager.get("bioep_shown_session") == "true")
+				return true;
+
 			this.cookieManager.erase("bioep_shown");
 			return false;
 		}
@@ -118,10 +129,14 @@ window.bioEp = {
 		}
 
 		// Add the close button
-		this.closeBtnEl = document.createElement("div");
-		this.closeBtnEl.id = "bio_ep_close";
-		this.closeBtnEl.appendChild(document.createTextNode("X"));
-		this.popupEl.insertBefore(this.closeBtnEl, this.popupEl.firstChild);
+		if(document.getElementById("bio_ep_close"))
+			this.closeBtnEl = document.getElementById("bio_ep_close");
+		else {
+			this.closeBtnEl = document.createElement("div");
+			this.closeBtnEl.id = "bio_ep_close";
+			this.closeBtnEl.appendChild(document.createTextNode("X"));
+			this.popupEl.insertBefore(this.closeBtnEl, this.popupEl.firstChild);
+		}
 	},
 
 	// Show the popup
@@ -140,7 +155,8 @@ window.bioEp = {
 
 		this.shown = true;
 		
-		this.cookieManager.create("bioep_shown", "true", this.cookieExp);
+		this.cookieManager.create("bioep_shown", "true", this.cookieExp, false);
+		this.cookieManager.create("bioep_shown_session", "true", 0, true);
 		
 		if(typeof this.onPopup === "function") {
 			this.onPopup();
@@ -208,15 +224,37 @@ window.bioEp = {
 
 	// Load event listeners for the popup
 	loadEvents: function() {
+		// Track mouse movement.
+		this.addEvent(document, "mousemove", function(e) {
+			e = e ? e : window.event;
+			this.mouse.curY = e.pageY;
+		}.bind(this));
+
+		// Store the last Y position of the mouse every 350 ms.
+		window.setInterval(function() {
+			this.mouse.lastY = this.mouse.curY;
+		}.bind(this), 350);
+
 		// Track mouseout event on document
 		this.addEvent(document, "mouseout", function(e) {
 			e = e ? e : window.event;
-			var from = e.relatedTarget || e.toElement;
 
-			// Reliable, works on mouse exiting window and user switching active program
-			if(!from)
-				bioEp.showPopup();
-		});
+			// If this is an autocomplete element.
+			if(e.target.tagName.toLowerCase() == "input")
+				return
+
+			// If the current mouse Y position is less than the last
+			// mouse Y position, show the pop up.
+			//
+			// This should be enough to signify exit intent.
+			if(this.mouse.curY < this.mouse.lastY) {
+				// Reliable, works on mouse exiting window and
+				// user switching active program
+				var from = e.relatedTarget || e.toElement;
+				if(!from)
+					bioEp.showPopup();
+			}
+		}.bind(this));
 
 		// Handle the popup close button
 		this.addEvent(this.closeBtnEl, "click", function() {
@@ -239,6 +277,7 @@ window.bioEp = {
 		this.delay = (typeof opts.delay === 'undefined') ? this.delay : opts.delay;
 		this.showOnDelay = (typeof opts.showOnDelay === 'undefined') ? this.showOnDelay : opts.showOnDelay;
 		this.cookieExp = (typeof opts.cookieExp === 'undefined') ? this.cookieExp : opts.cookieExp;
+		this.showOncePerSession = (typeof opts.showOncePerSession === 'undefined') ? this.showOncePerSession : opts.showOncePerSession;
 		this.onPopup = (typeof opts.onPopup === 'undefined') ? this.onPopup : opts.onPopup;
 	},
 
