@@ -6,10 +6,6 @@ window.bioEp = {
 	shown: false,
 	overflowDefault: "visible",
 	transformDefault: "",
-	mouse: {
-		curY: 0,
-		lastY: 0
-	},
 	
 	// Popup options
 	width: 400,
@@ -224,36 +220,32 @@ window.bioEp = {
 
 	// Load event listeners for the popup
 	loadEvents: function() {
-		// Track mouse movement.
-		this.addEvent(document, "mousemove", function(e) {
-			e = e ? e : window.event;
-			this.mouse.curY = e.pageY;
-		}.bind(this));
-
-		// Store the last Y position of the mouse every 350 ms.
-		window.setInterval(function() {
-			this.mouse.lastY = this.mouse.curY;
-		}.bind(this), 350);
-
 		// Track mouseout event on document
 		this.addEvent(document, "mouseout", function(e) {
 			e = e ? e : window.event;
 
 			// If this is an autocomplete element.
 			if(e.target.tagName.toLowerCase() == "input")
-				return
+				return;
 
-			// If the current mouse Y position is less than the last
-			// mouse Y position, show the pop up.
-			//
-			// This should be enough to signify exit intent.
-			if(this.mouse.curY < this.mouse.lastY) {
-				// Reliable, works on mouse exiting window and
-				// user switching active program
-				var from = e.relatedTarget || e.toElement;
-				if(!from)
-					bioEp.showPopup();
-			}
+			// Get the current viewport width.
+			var vpWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+			// If the current mouse X position is within 50px of the right edge
+			// of the viewport, return.
+			if(e.clientX >= (vpWidth - 50))
+				return;
+
+			// If the current mouse Y position is not within 50px of the top
+			// edge of the viewport, return.
+			if(e.clientY >= 50)
+				return;
+
+			// Reliable, works on mouse exiting window and
+			// user switching active program
+			var from = e.relatedTarget || e.toElement;
+			if(!from)
+				bioEp.showPopup();
 		}.bind(this));
 
 		// Handle the popup close button
