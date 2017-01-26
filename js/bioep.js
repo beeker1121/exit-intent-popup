@@ -8,7 +8,7 @@ window.bioEp = {
 	transformDefault: "",
 	mouse: {
 		curY: 0,
-		lastY: 0
+		lastY: 0,
 	},
 	
 	// Popup options
@@ -247,7 +247,8 @@ window.bioEp = {
 			// mouse Y position, show the pop up.
 			//
 			// This should be enough to signify exit intent.
-			if(this.mouse.curY < this.mouse.lastY) {
+			// Added check to see if curY is less than 10 to prevent the scrollbar from activating the popup.
+			if(this.mouse.curY < this.mouse.lastY && (this.mouse.curY - window.scrollY) < 10) {
 				// Reliable, works on mouse exiting window and
 				// user switching active program
 				var from = e.relatedTarget || e.toElement;
