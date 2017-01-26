@@ -248,7 +248,7 @@ window.bioEp = {
 			//
 			// This should be enough to signify exit intent.
 			// Added check to see if curY is less than 10 to prevent the scrollbar from activating the popup.
-			if(this.mouse.curY < this.mouse.lastY && (this.mouse.curY - window.scrollY) < 10 && !this.mouse.mouseClicked) {
+			if(this.mouse.curY < this.mouse.lastY && (this.mouse.curY - window.scrollY) < 10) {
 				// Reliable, works on mouse exiting window and
 				// user switching active program
 				var from = e.relatedTarget || e.toElement;
