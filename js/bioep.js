@@ -4,9 +4,10 @@ window.bioEp = {
 	popupEl: {},
 	closeBtnEl: {},
 	shown: false,
+	inactive: false,
 	overflowDefault: "visible",
 	transformDefault: "",
-	
+
 	// Popup options
 	width: 400,
 	height: 220,
@@ -18,14 +19,14 @@ window.bioEp = {
 	cookieExp: 30,
 	showOncePerSession: false,
 	onPopup: null,
-	
+
 	// Object for handling cookies, taken from QuirksMode
 	// http://www.quirksmode.org/js/cookies.html
 	cookieManager: {
 		// Create a cookie
 		create: function(name, value, days, sessionOnly) {
 			var expires = "";
-			
+
 			if(sessionOnly)
 				expires = "; expires=0"
 			else if(days) {
@@ -33,30 +34,30 @@ window.bioEp = {
 				date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 				expires = "; expires=" + date.toGMTString();
 			}
-			
+
 			document.cookie = name + "=" + value + expires + "; path=/";
 		},
-		
+
 		// Get the value of a cookie
 		get: function(name) {
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(";");
-			
+
 			for(var i = 0; i < ca.length; i++) {
 				var c = ca[i];
 				while (c.charAt(0) == " ") c = c.substring(1, c.length);
 				if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
 			}
-			
+
 			return null;
 		},
-		
+
 		// Delete a cookie
 		erase: function(name) {
 			this.create(name, "", -1);
 		}
 	},
-	
+
 	// Handle the bioep_shown cookie
 	// If present and true, return true
 	// If not present or false, create and return false
@@ -137,7 +138,7 @@ window.bioEp = {
 
 	// Show the popup
 	showPopup: function() {
-		if(this.shown) return;
+		if(this.shown || this.inactive) return;
 
 		this.bgEl.style.display = "block";
 		this.popupEl.style.display = "block";
@@ -150,10 +151,10 @@ window.bioEp = {
 		document.body.style.overflow = "hidden";
 
 		this.shown = true;
-		
+
 		this.cookieManager.create("bioep_shown", "true", this.cookieExp, false);
 		this.cookieManager.create("bioep_shown_session", "true", 0, true);
-		
+
 		if(typeof this.onPopup === "function") {
 			this.onPopup();
 		}
@@ -208,6 +209,11 @@ window.bioEp = {
 
 		// Apply the scale transformation
 		this.popupEl.style.transform = this.transformDefault + " scale(" + scaleTo + ")";
+	},
+
+	// Toggle whether or not the popup is active
+	toggleActive: function() {
+		this.inactive = !this.inactive;
 	},
 
 	// Event listener initialisation for all browsers
