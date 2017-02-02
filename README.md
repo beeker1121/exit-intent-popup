@@ -9,6 +9,7 @@ exit-intent-popup
 * Cookie support with optional expiry date.
 * Set a timed delay before the script starts tracking exit intent.
 * Display popup based on exit intent or timed delay.
+* Popup can be enabled and disabled after initialization.
 * Scales to adjust to window size.
 
 # Usage
@@ -36,7 +37,7 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
             // Options
         });
     </script>
-    
+
     <style type="text/css">
         #bio_ep_bg {} // background
         #bio_ep {} // popup
