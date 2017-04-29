@@ -1,0 +1,24 @@
+{
+  "name": "beeker1121/exit-intent-popup",
+  "description": "Display an HTML and CSS based popup on exit intent",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "setup": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beeker1121/exit-intent-popup.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Beeker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/beeker1121/exit-intent-popup/issues"
+  },
+  "homepage": "http://beeker.io/exit-intent-popup-script-tutorial"
+}
