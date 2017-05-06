@@ -104,7 +104,7 @@ window.bioEp = {
 
 		// Insert it before other existing style
 		// elements so user CSS isn't overwritten
-		document.head.insertBefore(style, document.getElementsByTagName("style")[0]);
+		document.head.insertBefore(style, document.head.getElementsByTagName("style")[0]);
 	},
 
 	// Add the popup to the page
