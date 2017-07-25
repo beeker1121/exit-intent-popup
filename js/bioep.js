@@ -131,7 +131,7 @@ window.bioEp = {
 		else {
 			this.closeBtnEl = document.createElement("div");
 			this.closeBtnEl.id = "bio_ep_close";
-			this.closeBtnEl.appendChild(document.createTextNode("X"));
+			this.closeBtnEl.appendChild(document.createTextNode("×"));
 			this.popupEl.insertBefore(this.closeBtnEl, this.popupEl.firstChild);
 		}
 	},
