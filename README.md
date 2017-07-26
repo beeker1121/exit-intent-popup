@@ -101,7 +101,7 @@ Name | Type | Default | Description
 **cookieExp** | integer | 30 | The number of days to set the cookie for. A cookie is used to track if the popup has already been shown to a specific visitor. If the popup has been shown, it will not show again until the cookie expires. A value of 0 will always show the popup.
 **showOncePerSession** | boolean | false | If true, the popup will only show once per browser session. If false and cookieExp is set to 0, the popup will show multiple times in a single browser session.
 **onPopup** | function | null | A callback function to be called when the popup is displayed in the browser.
-**closeOnBackgroundClick** | boolean | false | If true, the popup will close just like when the user clicks the 'X'.
+**closeOnBackgroundClick** | boolean | false | If true, the popup will close when the user clicks the background.
 
 # License
 
