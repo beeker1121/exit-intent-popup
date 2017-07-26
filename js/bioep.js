@@ -18,6 +18,7 @@ window.bioEp = {
 	cookieExp: 30,
 	showOncePerSession: false,
 	onPopup: null,
+	closeOnBackgroundClick: false,
 	
 	// Object for handling cookies, taken from QuirksMode
 	// http://www.quirksmode.org/js/cookies.html
@@ -104,7 +105,7 @@ window.bioEp = {
 
 		// Insert it before other existing style
 		// elements so user CSS isn't overwritten
-		document.head.insertBefore(style, document.getElementsByTagName("style")[0]);
+		document.head.insertBefore(style, document.head.getElementsByTagName("style")[0]);
 	},
 
 	// Add the popup to the page
@@ -130,7 +131,7 @@ window.bioEp = {
 		else {
 			this.closeBtnEl = document.createElement("div");
 			this.closeBtnEl.id = "bio_ep_close";
-			this.closeBtnEl.appendChild(document.createTextNode("X"));
+			this.closeBtnEl.appendChild(document.createTextNode("×"));
 			this.popupEl.insertBefore(this.closeBtnEl, this.popupEl.firstChild);
 		}
 	},
@@ -253,6 +254,13 @@ window.bioEp = {
 			bioEp.hidePopup();
 		});
 
+		// Handle the background click close event
+		if(this.closeOnBackgroundClick) {
+			this.addEvent(this.bgEl, "click", function() {
+				bioEp.hidePopup();
+			});
+		}
+
 		// Handle window resizing
 		this.addEvent(window, "resize", function() {
 			bioEp.scalePopup();
@@ -271,6 +279,7 @@ window.bioEp = {
 		this.cookieExp = (typeof opts.cookieExp === 'undefined') ? this.cookieExp : opts.cookieExp;
 		this.showOncePerSession = (typeof opts.showOncePerSession === 'undefined') ? this.showOncePerSession : opts.showOncePerSession;
 		this.onPopup = (typeof opts.onPopup === 'undefined') ? this.onPopup : opts.onPopup;
+		this.closeOnBackgroundClick = (typeof opts.closeOnBackgroundClick === 'undefined') ? this.closeOnBackgroundClick : opts.closeOnBackgroundClick;
 	},
 
 	// Ensure the DOM has loaded
