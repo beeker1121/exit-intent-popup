@@ -227,6 +227,10 @@ window.bioEp = {
 			// If this is an autocomplete element.
 			if(e.target.tagName.toLowerCase() == "input")
 				return;
+			
+			// Firefox bug: When clicking on a select element, clientX/clientY becomes relative to the input. Ignore select elements.
+			if(e.target.tagName.toLowerCase() == "select")
+				return;
 
 			// Get the current viewport width.
 			var vpWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
