@@ -4,15 +4,27 @@
     <script type="text/javascript" src="js/bioep.min.js"></script>
     
     <script type="text/javascript">
-      bioEp.init({
+
+      Object.create(bioEp).init({
+	    id: '1',
         html: '<div id="content">This is a simple popup</div>',
         css: '#content {font-family: "Titillium Web", sans-serif; font-size: 14px;}',
-		    cookieExp: 0
+		cookieExp: 0
+      });
+	  
+      Object.create(bioEp).init({
+	    id: '2',
+        html: '<div id="content">This is a simple popup after 2 seconds</div>',
+        css: '#content {font-family: "Titillium Web", sans-serif; font-size: 14px;}',
+		cookieExp: 0,
+		showOnDelay: true,
+		delay: 2
       });
     </script>
   </head>
   
   <body>
+    <p>A popup will show in 2 seconds.</p>
     <p>Move your cusor above this window after 5 seconds.</p>
   </body>
 </html>
