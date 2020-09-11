@@ -20,7 +20,7 @@ Simply include the script and call its `init` function with any options you choo
 <script type="text/javascript" src="bioep.min.js"></script>
 
 <script type="text/javascript">
-	let popup = Object.create(bioEp);
+    let popup = Object.create(bioEp);
     popup.init({
         // Options
     });
@@ -39,7 +39,7 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
 
     <script type="text/javascript">
         Object.create(bioEp).init({
-			id: '1',
+	    id: '1',
             // Options
         });
     </script>
@@ -48,7 +48,7 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
         #bio_ep_bg_1 {} // background
         #bio_ep_1 {} // popup
         #bio_ep_close_1 {} // close button
-	</style>
+    </style>
 </head>
 <body>
     <div id="bio_ep_1">
