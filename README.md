@@ -3,6 +3,7 @@ exit-intent-popup
 
 # Features
 
+* Supports multipopups on one page (N+).
 * Fully customizable via HTML and CSS.
 * Can use third party forms to collect emails.
 * Support for embeddable CSS fonts, including Google Fonts.
@@ -19,32 +20,39 @@ Simply include the script and call its `init` function with any options you choo
 <script type="text/javascript" src="bioep.min.js"></script>
 
 <script type="text/javascript">
-    bioEp.init({
+    let popup = Object.create(bioEp);
+    popup.init({
+	id: '1',
+        // Options
+    });
+	
+    Object.create(bioEp).init({
+	id: '2',
         // Options
     });
 </script>
 ```
 
-You can also add HTML and CSS directly on the page.  The popup element you wish to use must have an id of `bio_ep`.
+You can also add HTML and CSS directly on the page.  The popup element you wish to use must have an id of `bio_ep_1`.
 
 ```html
 <head>
     <script type="text/javascript" src="bioep.min.js"></script>
 
     <script type="text/javascript">
-        bioEp.init({
+        Object.create(bioEp).init({
             // Options
         });
     </script>
     
     <style type="text/css">
-        #bio_ep_bg {} // background
-        #bio_ep {} // popup
-        #bio_ep_close {} // close button
-	</style>
+        #bio_ep_bg_1 {} // background
+        #bio_ep_1 {} // popup
+        #bio_ep_close_1 {} // close button
+    </style>
 </head>
 <body>
-    <div id="bio_ep">
+    <div id="bio_ep_1">
         <!-- your popup HTML goes here -->
     </div>
 </body>
@@ -55,20 +63,21 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
 Using HTML and CSS
 
 ```javascript
-bioEp.init({
-	html: '<div id="bio_ep_content">' +
+
+Object.create(bioEp).init({
+	html: '<div id="bio_ep_content_1">' +
 		'<img src="http://beeker.io/images/posts/2/tag.png" alt="Claim your discount!" />' +
 		'<span>HOLD ON!</span>' +
 		'<span>Click the button below to get a special discount</span>' +
 		'<span>This offer will NOT show again!</span>' +
-		'<a href="#YOURURLHERE" class="bio_btn">CLAIM YOUR DISCOUNT</a>' +
+		'<a href="#YOURURLHERE" class="bio_btn_1">CLAIM YOUR DISCOUNT</a>' +
 		'</div>',
-	css: '#bio_ep {width: 400px; height: 300px; color: #333; background-color: #fafafa; text-align: center;}' +
-		'#bio_ep_content {padding: 24px 0 0 0; font-family: "Titillium Web";}' +
-		'#bio_ep_content span:nth-child(2) {display: block; color: #f21b1b; font-size: 32px; font-weight: 600;}' +
-		'#bio_ep_content span:nth-child(3) {display: block; font-size: 16px;}' +
-		'#bio_ep_content span:nth-child(4) {display: block; margin: -5px 0 0 0; font-size: 16px; font-weight: 600;}' +
-		'.bio_btn {display: inline-block; margin: 18px 0 0 0; padding: 7px; color: #fff; font-size: 14px; font-weight: 600; background-color: #70bb39; border: 1px solid #47ad0b; cursor: pointer; -webkit-appearance: none; -moz-appearance: none; border-radius: 0; text-decoration: none;}',
+	css: '#bio_ep_1 {width: 400px; height: 300px; color: #333; background-color: #fafafa; text-align: center;}' +
+		'#bio_ep_content_1 {padding: 24px 0 0 0; font-family: "Titillium Web";}' +
+		'#bio_ep_content_1 span:nth-child(2) {display: block; color: #f21b1b; font-size: 32px; font-weight: 600;}' +
+		'#bio_ep_content_1 span:nth-child(3) {display: block; font-size: 16px;}' +
+		'#bio_ep_content_1 span:nth-child(4) {display: block; margin: -5px 0 0 0; font-size: 16px; font-weight: 600;}' +
+		'.bio_btn_1 {display: inline-block; margin: 18px 0 0 0; padding: 7px; color: #fff; font-size: 14px; font-weight: 600; background-color: #70bb39; border: 1px solid #47ad0b; cursor: pointer; -webkit-appearance: none; -moz-appearance: none; border-radius: 0; text-decoration: none;}',
 	fonts: ['//fonts.googleapis.com/css?family=Titillium+Web:300,400,600'],
 	cookieExp: 0
 });
@@ -77,12 +86,34 @@ bioEp.init({
 Using an image
 
 ```javascript
-bioEp.init({
+Object.create(bioEp).init({
+	id: '1',
 	width: 394,
 	height: 298,
-	html: '<a href="#YOURURLHERE" title="Claim your discount!"><img src="http://beeker.io/images/posts/2/template2.png" alt="Claim your discount!" /></a>',
+	html: '<a href="#YOURURLHERE" title="Claim your discount 1!"><img src="http://beeker.io/images/posts/2/template2.png" alt="Claim your discount 1!" /></a>',
 	cookieExp: 0
 });
+
+Object.create(bioEp).init({
+	id: '2',
+	width: 394,
+	height: 298,
+	html: '<a href="#YOURURLHERE" title="Claim your discount 2!"><img src="http://beeker.io/images/posts/2/template2.png" alt="Claim your discount 2!" /></a>',
+	cookieExp: 0,
+	showOnDelay: true,
+	delay: 2
+});
+
+Object.create(bioEp).init({
+	id: '3',
+	width: 394,
+	height: 298,
+	html: '<a href="#YOURURLHERE" title="Claim your discount 3!"><img src="http://beeker.io/images/posts/2/template2.png" alt="Claim your discount 3!" /></a>',
+	cookieExp: 0,
+	showOnDelay: true,
+	delay: 4
+});
+
 ```
 
 # Options
@@ -91,6 +122,7 @@ All options must be added to the init function as an object.
 
 Name | Type | Default | Description
 -----|------|---------|------------
+**id** | string | 1 | Unique id for multiple popups on one page
 **width** | integer | 400 | The width of the popup. This can be overridden by adding your own CSS for the #bio_ep element.
 **height** | integer | 220 | The height of the popup. This can be overridden by adding your own CSS for the #bio_ep element.
 **html** | string | blank | The HTML code to be placed within the popup. HTML can be added through this function or on the page itself within a element.
