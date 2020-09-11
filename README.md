@@ -22,10 +22,12 @@ Simply include the script and call its `init` function with any options you choo
 <script type="text/javascript">
     let popup = Object.create(bioEp);
     popup.init({
+	id: '1',
         // Options
     });
 	
     Object.create(bioEp).init({
+	id: '2',
         // Options
     });
 </script>
@@ -39,7 +41,6 @@ You can also add HTML and CSS directly on the page.  The popup element you wish 
 
     <script type="text/javascript">
         Object.create(bioEp).init({
-	    id: '1',
             // Options
         });
     </script>
